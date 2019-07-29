@@ -1,0 +1,33 @@
+From 156522a4b473712d91d6523b51885c5629a25d88 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:21 +0100
+Subject: [PATCH] cmd: unzip: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this command that is not critical until we can adress the issue
+properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ cmd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 792b04837e..3af5803ff4 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -539,6 +539,7 @@ config CMD_LZMADEC
+ 
+ config CMD_UNZIP
+ 	bool "unzip"
++	default n if ARCH_SUNXI
+ 	default y if CMD_BOOTI
+ 	help
+ 	  Uncompress a zip-compressed memory region.
+-- 
+2.11.0
+

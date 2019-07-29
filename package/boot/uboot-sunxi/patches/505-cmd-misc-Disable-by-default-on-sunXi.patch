@@ -1,0 +1,34 @@
+From a49e7531afb3f91940792e0c1a5de18678a3ede5 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:24 +0100
+Subject: [PATCH] cmd: misc: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this command that is not critical until we can adress the issue
+properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ cmd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 74e4b1b9d4..032a1f4003 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -1130,6 +1130,7 @@ config CMD_GETTIME
+ # TODO: rename to CMD_SLEEP
+ config CMD_MISC
+ 	bool "sleep"
++	default n if ARCH_SUNXI
+ 	default y
+ 	help
+ 	  Delay execution for some time
+-- 
+2.11.0
+

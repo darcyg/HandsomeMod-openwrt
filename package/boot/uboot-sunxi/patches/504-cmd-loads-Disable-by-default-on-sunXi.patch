@@ -1,0 +1,33 @@
+From 49ddb2ba112155a0f9fce7c08aef5440a081eaf0 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:23 +0100
+Subject: [PATCH] cmd: loads: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this command that is not critical until we can adress the issue
+properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ cmd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 8be39de482..74e4b1b9d4 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -755,6 +755,7 @@ config CMD_LOADB
+ 
+ config CMD_LOADS
+ 	bool "loads"
++	default n if ARCH_SUNXI
+ 	default y
+ 	help
+ 	  Load an S-Record file over serial line
+-- 
+2.11.0
+

@@ -1,0 +1,36 @@
+From 44e9628f9a8b11668588c104ea13a67401c6bd94 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:27 +0100
+Subject: [PATCH] net: regex: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this regular expression support that is not critical until
+we can adress the issue properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+[jagan: fixed commit message nit]
+Signed-off-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ lib/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lib/Kconfig b/lib/Kconfig
+index 18663badb2..f39e573581 100644
+--- a/lib/Kconfig
++++ b/lib/Kconfig
+@@ -47,6 +47,7 @@ config USE_TINY_PRINTF
+ 
+ config REGEX
+ 	bool "Enable regular expression support"
++	default n if ARCH_SUNXI
+ 	default y if NET
+ 	help
+ 	  If this variable is defined, U-Boot is linked against the
+-- 
+2.11.0
+

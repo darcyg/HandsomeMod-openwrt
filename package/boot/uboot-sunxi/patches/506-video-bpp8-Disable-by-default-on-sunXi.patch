@@ -1,0 +1,35 @@
+From f93c275da5d8b3cf2debb3fc42b28770eb90a6a7 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:25 +0100
+Subject: [PATCH] video: bpp8: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this command that is not critical until we can adress the issue
+properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Anatolij Gustschin <agust@denx.de>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ drivers/video/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
+index 45a105db06..a267c9acfe 100644
+--- a/drivers/video/Kconfig
++++ b/drivers/video/Kconfig
+@@ -38,6 +38,7 @@ config BACKLIGHT_GPIO
+ config VIDEO_BPP8
+ 	bool "Support 8-bit-per-pixel displays"
+ 	depends on DM_VIDEO
++	default n if ARCH_SUNXI
+ 	default y if DM_VIDEO
+ 	help
+ 	  Support drawing text and bitmaps onto a 8-bit-per-pixel display.
+-- 
+2.11.0
+

@@ -1,0 +1,8 @@
+src-git packages https://github.com/handsomeyingyan/packages.git
+src-git luci https://github.com/handsomeyingyan/luci.git
+src-git routing https://git.openwrt.org/feed/routing.git;openwrt-18.06
+src-git telephony https://git.openwrt.org/feed/telephony.git;openwrt-18.06
+src-git lean https://github.com/handsomeyingyan/lean.git
+
+# Suggestions : You can use closed-source wireness driver for better experience (Mtk soc only) .
+#src-git mtk https://github.com/Nossiac/mtk-openwrt-feeds

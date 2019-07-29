@@ -1,0 +1,35 @@
+From 1bb8910bc2ee43dd53c7f87988c110bc54b61414 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:26 +0100
+Subject: [PATCH] video: bpp16: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this command that is not critical until we can adress the issue
+properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Reviewed-by: Anatolij Gustschin <agust@denx.de>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ drivers/video/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
+index a267c9acfe..2fc0defcd0 100644
+--- a/drivers/video/Kconfig
++++ b/drivers/video/Kconfig
+@@ -49,6 +49,7 @@ config VIDEO_BPP8
+ config VIDEO_BPP16
+ 	bool "Support 16-bit-per-pixel displays"
+ 	depends on DM_VIDEO
++	default n if ARCH_SUNXI
+ 	default y if DM_VIDEO
+ 	help
+ 	  Support drawing text and bitmaps onto a 16-bit-per-pixel display.
+-- 
+2.11.0
+

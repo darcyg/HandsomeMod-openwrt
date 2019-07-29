@@ -1,0 +1,71 @@
+  _______                     ________        __
+ |       |.-----.-----.-----.|  |  |  |.----.|  |_
+ |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+ |_______||   __|_____|__|__||________||__|  |____|
+          |__| 
+
+ __  __                       __                                        
+/\ \/\ \                     /\ \                                       
+\ \ \_\ \     __      ___    \_\ \    ____    ___     ___ ___      __   
+ \ \  _  \  /'__`\  /' _ `\  /'_` \  /',__\  / __`\ /' __` __`\  /'__`\ 
+  \ \ \ \ \/\ \L\.\_/\ \/\ \/\ \L\ \/\__, `\/\ \L\ \/\ \/\ \/\ \/\  __/ 
+   \ \_\ \_\ \__/.\_\ \_\ \_\ \___,_\/\____/\ \____/\ \_\ \_\ \_\ \____\
+    \/_/\/_/\/__/\/_/\/_/\/_/\/__,_ /\/___/  \/___/  \/_/\/_/\/_/\/____/                          __     
+ /'\_/`\            /\ \    
+/\      \    ___    \_\ \   
+\ \ \__\ \  / __`\  /'_` \  
+ \ \ \_/\ \/\ \L\ \/\ \L\ \ 
+  \ \_\\ \_\ \____/\ \___,_\
+   \/_/ \/_/\/___/  \/__,_ /
+                                                                        
+-------------------------Wireness Freedom For End User! ------------------------------                                                                        
+Warning: (this is alpha ver may brick your device!) 
+This is the buildsystem for the HandsomeMod/OpenWrt Linux distribution.
+
+To build your own firmware you need a Linux, BSD ,MacOSX or Windows 10 (wsl) system (case
+sensitive filesystem required). Cygwin is unsupported because of the lack
+of a case sensitive file system.
+
+You need gcc, binutils, bzip2, flex, python, perl, make, find, grep, diff,
+unzip, gawk, getopt, subversion, libz-dev and libc headers installed.
+
+if your package manner is apt run the command below to install those packages:
+
+sudo apt-get install gcc g++ build-essential asciidoc  binutils bzip2 gawk gettext git libncurses5-dev libz-dev patch flex bison make autoconf texinfo unzip sharutils subversion ncurses-term zlib1g-dev ccache upx lib32gcc1 libc6-dev-i386 uglifyjs git-core gcc-multilib p7zip p7zip-full msmtp libssl-dev libglib2.0-dev xmlto qemu-utils automake libtool  -y
+
+----------------------------------------------------------------------------------------
+Moded Part:
+Replace Uhttpd with Lighttpd (luci)
+Replace some old school icon in openwrt 
+Add gargoyle's qos
+Add guide
+Add QCA FAST PATH (4.9 ONLY)
+Add gmediarender (to do)
+Del the flash size limit while building.
+Del image builder to reduce the size
+Del luci-theme-openwrt and luci-theme-bootstrap 
+Some kernel tweak to make better wifi experience
+---------------------------------------------------------------------------------------
+
+----------Building Steps
+
+1. Run "./scripts/feeds update -a" to obtain all the latest package definitions
+defined in feeds.conf / feeds.conf.default
+
+2. Run "./scripts/feeds install -a" to install symlinks for all obtained
+packages into package/feeds/
+
+3. Run "make menuconfig" to select your preferred configuration for the
+toolchain, target system & firmware packages.
+
+4. Run "make" to build your firmware. This will download all sources, build
+the cross-compile toolchain and then cross-compile the Linux kernel & all
+chosen applications for your target system.
+
+------------------------------------------------------------------------
+
+Sunshine!
+	Your OpenWrt Community
+	http://www.openwrt.org
+
+

@@ -1,0 +1,54 @@
+From 76e0fd20913accf170ff3805ffe381e3fbf92402 Mon Sep 17 00:00:00 2001
+From: Icenowy Zheng <icenowy@aosc.io>
+Date: Fri, 19 Jan 2018 23:26:58 +0800
+Subject: [PATCH] sunxi: suniv: add boot sequence for SPL to try
+
+The BROM of suniv do not pass the info of boot media to SPL.
+
+Add boot sequence for SPL to try again for the available boot media.
+
+Signed-off-by: Icenowy Zheng <icenowy@aosc.io>
+---
+ arch/arm/mach-sunxi/board.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/arch/arm/mach-sunxi/board.c b/arch/arm/mach-sunxi/board.c
+index 8f295124cb..308a27b42d 100644
+--- a/arch/arm/mach-sunxi/board.c
++++ b/arch/arm/mach-sunxi/board.c
+@@ -260,10 +260,32 @@ uint32_t sunxi_get_boot_device(void)
+ }
+ 
+ #ifdef CONFIG_SPL_BUILD
++
++#ifndef CONFIG_MACH_SUNIV
+ u32 spl_boot_device(void)
+ {
+ 	return sunxi_get_boot_device();
+ }
++#else
++/*
++ * suniv BROM do not pass the boot media type to SPL, so we try with the
++ * boot sequence in BROM: mmc0->spinor->fail.
++ */
++void board_boot_order(u32 *spl_boot_list)
++{
++	/*
++	 * See the comments above in sunxi_get_boot_device() for infomation
++	 * about FEL boot.
++	 */
++	if (!is_boot0_magic(SPL_ADDR + 4)) {
++		spl_boot_list[0] = BOOT_DEVICE_BOARD;
++		return;
++	}
++
++	spl_boot_list[0] = BOOT_DEVICE_MMC1;
++	spl_boot_list[1] = BOOT_DEVICE_SPI;
++}
++#endif
+ 
+ /* No confirmation data available in SPL yet. Hardcode bootmode */
+ u32 spl_boot_mode(const u32 boot_device)
+-- 
+2.11.0
+

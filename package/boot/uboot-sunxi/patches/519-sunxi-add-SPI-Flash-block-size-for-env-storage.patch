@@ -1,0 +1,26 @@
+From c7575eb23109474e68b6ae6304cfd5a8a88fa913 Mon Sep 17 00:00:00 2001
+From: Icenowy Zheng <icenowy@aosc.io>
+Date: Sat, 20 Jan 2018 12:19:12 +0800
+Subject: [PATCH] sunxi: add SPI Flash block size for env storage
+
+Signed-off-by: Icenowy Zheng <icenowy@aosc.io>
+---
+ include/configs/sunxi-common.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/include/configs/sunxi-common.h b/include/configs/sunxi-common.h
+index 00e90e3526..67a900ba98 100644
+--- a/include/configs/sunxi-common.h
++++ b/include/configs/sunxi-common.h
+@@ -171,6 +171,8 @@
+ #define CONFIG_SYS_MMC_ENV_DEV		0
+ #endif
+ #define CONFIG_SYS_MMC_MAX_DEVICE	4
++#elif defined(CONFIG_ENV_IS_IN_SPI_FLASH)
++#define CONFIG_ENV_SECT_SIZE 0x1000
+ #elif defined(CONFIG_ENV_IS_NOWHERE)
+ #define CONFIG_ENV_SIZE			(128 << 10)
+ #endif
+-- 
+2.11.0
+

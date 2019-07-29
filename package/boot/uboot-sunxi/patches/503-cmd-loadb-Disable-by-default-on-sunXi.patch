@@ -1,0 +1,33 @@
+From fa64f10f022f940a45b45cd0153a8d24a60e7688 Mon Sep 17 00:00:00 2001
+From: Maxime Ripard <maxime.ripard@free-electrons.com>
+Date: Thu, 21 Dec 2017 13:40:22 +0100
+Subject: [PATCH] cmd: loadb: Disable by default on sunXi
+
+The sunXi arm64 build has overflown, leading to the main U-boot binary
+overwriting the environment when flashing the new image, or even worse,
+overwriting itself when we're calling saveenv.
+
+Disable this command that is not critical until we can adress the issue
+properly.
+
+Signed-off-by: Maxime Ripard <maxime.ripard@free-electrons.com>
+Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+---
+ cmd/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/cmd/Kconfig b/cmd/Kconfig
+index 3af5803ff4..8be39de482 100644
+--- a/cmd/Kconfig
++++ b/cmd/Kconfig
+@@ -748,6 +748,7 @@ config CMD_I2C
+ 
+ config CMD_LOADB
+ 	bool "loadb"
++	default n if ARCH_SUNXI
+ 	default y
+ 	help
+ 	  Load a binary file over serial line.
+-- 
+2.11.0
+
