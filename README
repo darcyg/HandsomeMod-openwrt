@@ -35,14 +35,10 @@ sudo apt-get install gcc g++ build-essential asciidoc  binutils bzip2 gawk gette
 
 ----------------------------------------------------------------------------------------
 Moded Part:
-Replace Uhttpd with Lighttpd (luci)
 Replace some old school icon in openwrt 
-Add gargoyle's qos
 Add guide
 Add QCA FAST PATH (4.9 ONLY)
-Add gmediarender (to do)
 Del the flash size limit while building.
-Del image builder to reduce the size
 Del luci-theme-openwrt and luci-theme-bootstrap 
 Some kernel tweak to make better wifi experience
 ---------------------------------------------------------------------------------------
